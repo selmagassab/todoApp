@@ -1,0 +1,105 @@
+type Query {
+  getUsers: [User]
+  getUserDetail(id: ID!): User
+
+  getProjects: [Project]
+  getProjectDetail(id: ID!): Project
+
+  getTasks: [Task]
+  getTaskDetail(id: ID!): Task
+}
+
+scalar Date
+
+type User {
+  id: ID!
+  username: String
+  email: String
+  password: String
+  role: Role
+}
+enum Role {
+  admin
+  user
+}
+enum Status {
+  new
+  inprogress
+  completed
+}
+
+type Task {
+  id: ID!
+  title: String
+  startDate: Date
+  endDate: Date
+  status: Status
+  ProjectId: Int
+  project: Project
+  description: String
+}
+
+type Project {
+  id: ID!
+  title: String
+  startDate: Date
+  endDate: Date
+  UserId: Int
+  user: User
+  tasks: [Task]
+}
+
+type Mutation {
+  createUser(
+    username: String
+    email: String
+    password: String
+    role: Role
+  ): String
+
+  updateUser(
+    id: ID!
+    username: String
+    email: String
+    password: String
+    role: Role
+  ): String
+
+  deleteUser(id: ID!): String
+
+  createProject(
+    title: String
+    startDate: Date
+    endDate: Date
+    UserId: Int
+  ): String
+
+  updateProject(
+    id: ID!
+    title: String
+    startDate: Date
+    endDate: Date
+    UserId: Int
+  ): String
+  deleteProject(id: ID!): String
+
+  createTask(
+    title: String
+    startDate: Date
+    endDate: Date
+    ProjectId: Int
+    status: Status
+    description: String
+  ): String
+
+  updateTask(
+    id: ID!
+    title: String
+    description: String
+    startDate: Date
+    endDate: Date
+    ProjectId: Int
+    status: Status
+  ): String
+  deleteTask(id: ID!): String
+}
